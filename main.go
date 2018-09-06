@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ggiamarchi/mac6/mac6"
+	"github.com/ggiamarchi/mac6/ipv6"
 )
 
 func main() {
@@ -17,5 +17,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(mac6.Mac6(os.Args[1]))
+	fmt.Println(ipv6.Compute(os.Args[1]))
 }
