@@ -9,3 +9,15 @@ script:
   - GOOS=linux  GOARCH=amd64 go build -o mac6-linux-amd64
   - GOOS=linux  GOARCH=arm   go build -o mac6-linux-arm
   - GOOS=darwin GOARCH=amd64 go build -o mac6-darwin-amd64
+
+deploy:
+  provider: releases
+  api_key:
+    secure: RzTRBt/1EwdU/7hFWHSyQngmskWQB95wnVirpZnjz+Yp0XduG7uJzG9JAFhAF+ilBnDJyl5N7fe5c38NCGqacWU3XEXJJvzubUdvsQM/jhh05FKB8vfVMImeMuFsD6AmMAKJPtmhVv9I9EtBu209FKoh3aNy2gND9XcNMqud2zAcROrWWJ06r3s/BISPsGT5CC0VZ32afOrXNPwgXjyZE1pWI8H5rp6Q2LDhMGIsTliQnJowirfBRlCTElJ5p1SH9cdzV5BhLUsgnX2jXF6Wm9H4EZdlX8+UM6HjmO04jX1dG0JBN8cfQqlN4lC5SHjOHLBn0AhKpvFmUeJSKMNt+/6/2BpNL8QwzbQ2/kc0yXCtZ223yqEMGiBLp/eYoiEYlV0flIt7OAWBq6AAJARpJ2j0C28XMWf8FE8VvfXBT/5o2l7owqIHrwOH2Os4G/OuF8HnLzBX9V7DgMoFRVkPCWui0jqisCUfkUoJRAf6s5UgMtRlMr1RndslZ3sSPABwTh5o9XkWIDMJXdYnnqxuE1KaafN2XTTF/lp8afzJ6KTdnexKI2h/NzHUVtodCM5r1aU+fCKqhXFna4+MlGcZKmzcMH1T91oCVhA4yasoGfKpInoGV9B5OzBLNZL467H3znVfmzTPKPOwybfcr5MK70kdzswdcc/3pNGq5Ve1WMo=
+  skip_cleanup: true
+  file:
+    - mac6-linux-amd64
+    - mac6-linux-arm
+    - mac6-darwin-amd64
+  on:
+    tags: true
