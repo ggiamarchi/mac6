@@ -1,0 +1,11 @@
+language: go
+
+sudo: false
+
+go:
+  - 1.13
+
+script:
+  - GOOS=linux  GOARCH=amd64 go build -o mac6-linux-amd64
+  - GOOS=linux  GOARCH=arm   go build -o mac6-linux-arm
+  - GOOS=darwin GOARCH=amd64 go build -o mac6-darwin-amd64
