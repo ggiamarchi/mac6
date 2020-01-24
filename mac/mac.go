@@ -2,6 +2,7 @@ package mac
 
 import (
 	"bytes"
+	"fmt"
 	"strings"
 )
 
@@ -17,9 +18,9 @@ func isHexChar(char byte) bool {
 	return false
 }
 
-// normalizeMACAddress takes the input MAC address and remove every non hexa symbol
+// NormalizeMACAddress takes the input MAC address and remove every non hexa symbol
 // and lowercase everything else
-func NormalizeMACAddress(mac string) string {
+func NormalizeMACAddress(mac string) (string, error) {
 	var buffer bytes.Buffer
 
 	macArray := strings.Split(strings.ToLower(mac), ":")
@@ -35,5 +36,10 @@ func NormalizeMACAddress(mac string) string {
 			}
 		}
 	}
-	return buffer.String()
+
+	if buffer.Len() != 12 {
+		return "", fmt.Errorf("Invalid MAC address")
+	}
+
+	return buffer.String(), nil
 }

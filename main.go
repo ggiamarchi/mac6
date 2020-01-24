@@ -17,5 +17,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(ipv6.Compute(os.Args[1]))
+	ip, err := ipv6.Compute(os.Args[1])
+
+	if err != nil {
+		fmt.Printf("Error : %s\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println(ip)
 }
