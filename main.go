@@ -5,24 +5,26 @@ import (
 	"os"
 
 	"github.com/ggiamarchi/mac6/ipv6"
+	cli "github.com/jawher/mow.cli"
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		fmt.Println()
-		fmt.Println("mac6 compute IPv6 link-local address from MAC address")
-		fmt.Println()
-		fmt.Println("Usage : mac6 <MAC Address>")
-		fmt.Println()
-		os.Exit(1)
+	app := cli.App("mac6", "Compute IPv6 link-local address from MAC address")
+
+	app.Spec = "[ -i=<interface> ] MAC"
+
+	outInterface := app.StringOpt("i interface", "", "Out interface to build IPv6 link local string")
+	macAddress := app.StringArg("MAC", "", "Mac address")
+
+	app.Action = func() {
+		ip, err := ipv6.ComputeLinkLocalAddress(*macAddress, *outInterface)
+
+		if err != nil {
+			fmt.Printf("Error : %s\n", err)
+			os.Exit(1)
+		}
+		fmt.Println(ip)
 	}
 
-	ip, err := ipv6.Compute(os.Args[1])
-
-	if err != nil {
-		fmt.Printf("Error : %s\n", err)
-		os.Exit(1)
-	}
-
-	fmt.Println(ip)
+	app.Run(os.Args)
 }

@@ -43,8 +43,9 @@ func invertBit7(hexOctet string) (string, error) {
 	return parseBinStringToHex(s), nil
 }
 
-func Compute(macAddress string) (string, error) {
-
+// ComputeLinkLocalAddress outputs the IPv6 link-local address matching a given MAC address
+// If outInterface it appends "%<interface>" at the end of the MAC address
+func ComputeLinkLocalAddress(macAddress string, outInterface string) (string, error) {
 	nMac, err := mac.NormalizeMACAddress(macAddress)
 
 	if err != nil {
@@ -56,5 +57,11 @@ func Compute(macAddress string) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("fe80::%s%s:%sff:fe%s:%s%s", s, nMac[2:4], nMac[4:6], nMac[6:8], nMac[8:10], nMac[10:]), nil
+	mac := fmt.Sprintf("fe80::%s%s:%sff:fe%s:%s%s", s, nMac[2:4], nMac[4:6], nMac[6:8], nMac[8:10], nMac[10:])
+
+	if outInterface != "" {
+		mac = fmt.Sprintf("%s%%%s", mac, outInterface)
+	}
+
+	return mac, nil
 }
